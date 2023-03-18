@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>NetEti.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>NetEti.ApplicationControl</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>$(AssemblyName) - Prozess-, Task-  oder Thread-Systemfunktionen</Title>
+    <Authors>Erik Nagel</Authors>
+    <Company>NetEti</Company>
+    <Description>Assembly mit - Prozess-, Task-  oder Thread-Systemfunktionen</Description>
+    <Copyright>Copyright © $(Authors) 2023-2023</Copyright>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <FileVersion>7.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ThreadParameter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NetEti.InfoController">
+      <HintPath>..\..\..\ReadyBin\Assemblies\NetEti.InfoController.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
