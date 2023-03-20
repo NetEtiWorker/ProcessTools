@@ -31,19 +31,10 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Returns the current helper-thread or null.
         /// </summary>
-        /// <param name="abortable">Optional parameter: Abortable to address.</param>
         /// <returns>Current helper-thread of this or a given Abortable or null.</returns>
-        public Thread? GetThread(Abortable? abortable = null)
+        public Thread? GetThread()
         {
-            Thread? otherThread = abortable?.GetThread();
-            if (otherThread == null)
-            {
-                return this._thread;
-            }
-            else
-            {
-                return otherThread;
-            }
+            return this._thread;
         }
 
         /// <summary>
