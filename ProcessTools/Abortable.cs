@@ -23,9 +23,12 @@ namespace NetEti.ApplicationControl
     /// </summary>
     /// <remarks>
     /// 17.03.2023 Erik Nagel: created.
+    /// 06.08.2023 Erik Nagel: Added missing comments.
     /// </remarks>
     public class Abortable
     {
+        #region modified Thread members
+
         private Thread _thread;
 
         /// <summary>
@@ -197,14 +200,28 @@ namespace NetEti.ApplicationControl
             }
         }
 
+        #endregion modified Thread members
+
         #region unmodified routed to Thread
 
-#pragma warning disable CS1591
+        // #pragma warning disable CS1591
 
+        /// <summary>
+        /// Leads to the extern int thread-id.
+        /// </summary>
         public int ManagedThreadId => _thread.ManagedThreadId;
 
+        /// <summary>
+        /// Wait for a length of time proportional to 'iterations'.  Each iteration is should
+        /// only take a few machine instructions.  Calling this API is preferable to coding
+        /// a explicit busy loop because the hardware can be informed that it is busy waiting.
+        /// </summary>
         public static void SpinWait(int iterations) => Thread.SpinWait(iterations);
 
+        /// <summary>
+        /// Leads to YieldInternal.
+        /// </summary>
+        /// <returns>A boolean, that indicates, whether to continue or not.</returns>
         public static bool Yield() => Thread.Yield();
 
         /// <summary>Returns true if the thread has been started and is not dead.</summary>
@@ -236,8 +253,15 @@ namespace NetEti.ApplicationControl
         /// </summary>
         public ThreadState ThreadState => _thread.ThreadState;
 
+        /// <summary>
+        /// Leads to the internal Interop ApartmentState.
+        /// </summary>
+        /// <returns>The internal Interop ApartmentState.</returns>
         public ApartmentState GetApartmentState() => _thread.GetApartmentState();
 
+        /// <summary>
+        /// Leads to the extern void DisableComObjectEagerCleanup.
+        /// </summary>
         public void DisableComObjectEagerCleanup() => _thread.DisableComObjectEagerCleanup();
 
         /// <summary>
@@ -259,32 +283,60 @@ namespace NetEti.ApplicationControl
         /// <exception cref="ThreadStateException">if the thread has not been started yet</exception>
         public bool Join(int millisecondsTimeout) => _thread.Join(millisecondsTimeout);
 
+        /// <summary>
+        /// Returns the current processor-id.
+        /// </summary>
+        /// <returns>The current processor-id.</returns>
         public static int GetCurrentProcessorId() => Thread.GetCurrentProcessorId();
 
+        /// <summary>
+        /// Contains the current culture.
+        /// </summary>
         public CultureInfo CurrentCulture
         { 
             get => _thread.CurrentCulture;
             set => _thread.CurrentCulture = value;
         }
 
+        /// <summary>
+        /// Contains the current ui-culture.
+        /// </summary>
         public CultureInfo CurrentUICulture
         { 
             get => _thread.CurrentUICulture;
             set => _thread.CurrentUICulture = value;
         }
 
+        /// <summary>
+        /// Contains the current principal or null.
+        /// </summary>
         public static IPrincipal? CurrentPrincipal
         {
             get => Thread.CurrentPrincipal;
             set => Thread.CurrentPrincipal = value;
         }
 
+        /// <summary>
+        /// Leads to the CurrentThread.
+        /// </summary>
         public static Thread CurrentThread => Thread.CurrentThread;
 
+        /// <summary>
+        /// Suspends the current thread for timeout milliseconds. If timeout == 0,
+        /// forces the thread to give up the remainder of its timeslice.  If timeout
+        /// == Timeout.Infinite, no timeout will occur.
+        /// </summary>
+        /// <param name="millisecondsTimeout"></param>
         public static void Sleep(int millisecondsTimeout) => Thread.Sleep(millisecondsTimeout);
 
+        /// <summary>
+        /// Leads to Thread.ExecutionContext.
+        /// </summary>
         public ExecutionContext? ExecutionContext => _thread.ExecutionContext;
 
+        /// <summary>
+        /// Contains the thread-name or null.
+        /// </summary>
         public string? Name
         {
             get => _thread.Name;
@@ -311,24 +363,55 @@ namespace NetEti.ApplicationControl
         /// </remarks>
         public void UnsafeStart(object? parameter) => _thread.UnsafeStart(parameter);
 
+        /// <summary>
+        /// Is no longer supported.
+        /// 
+        /// Throws a System.Threading.ThreadAbortException on the thread on which the call
+        /// was done to start thread termination.
+        /// By calling this method the thread is usually terminated.
+        /// 
+        /// Exceptions:
+        /// T:System.PlatformNotSupportedException:
+        /// .NET Core only: This member is not supported.
+        ///
+        /// T:System.Security.SecurityException:
+        /// The caller does not have the required permission.
+        ///
+        /// T:System.Threading.ThreadStateException:
+        /// The thread that was killed is currently suspended.
+        /// 
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete()]
         public void Abort(object? stateInfo)
         {
             throw new PlatformNotSupportedException();
         }
 
+        /// <summary>
+        /// Is no longer supported.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete()]
         public static void ResetAbort()
         {
             throw new PlatformNotSupportedException();
         }
 
+        /// <summary>
+        /// Is no longer supported.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete("Thread.Suspend has been deprecated. Use other classes in System.Threading, such as Monitor, Mutex, Event, and Semaphore, to synchronize Threads or protect resources.")]
         public void Suspend()
         {
             throw new PlatformNotSupportedException();
         }
 
+        /// <summary>
+        /// Is no longer supported.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete("Thread.Resume has been deprecated. Use other classes in System.Threading, such as Monitor, Mutex, Event, and Semaphore, to synchronize Threads or protect resources.")]
         public void Resume()
         {
@@ -337,75 +420,262 @@ namespace NetEti.ApplicationControl
 
         // Currently, no special handling is done for critical regions, and no special handling is necessary to ensure thread
         // affinity. If that changes, the relevant functions would instead need to delegate to RuntimeThread.
+
+        /// <summary>
+        /// Leads to Thread.BeginCriticalRegion().
+        /// </summary>
         public static void BeginCriticalRegion() => Thread.BeginCriticalRegion();
+
+        /// <summary>
+        /// Leads to Thread.EndCriticalRegion().
+        /// </summary>
         public static void EndCriticalRegion() => Thread.EndCriticalRegion();
+
+        /// <summary>
+        /// Leads to Thread.BeginThreadAffinity().
+        /// </summary>
         public static void BeginThreadAffinity() => Thread.BeginThreadAffinity();
+
+        /// <summary>
+        /// Leads to Thread.EndThreadAffinity().
+        /// </summary>
         public static void EndThreadAffinity() => Thread.EndThreadAffinity();
 
+        /// <summary>
+        /// Leads to Thread.AllocateDataSlot().
+        /// </summary>
         public static LocalDataStoreSlot AllocateDataSlot() => Thread.AllocateDataSlot();
+
+        /// <summary>
+        /// Leads to Thread.AllocateNamedDataSlot(...).
+        /// </summary>
         public static LocalDataStoreSlot AllocateNamedDataSlot(string name) => Thread.AllocateNamedDataSlot(name);
+
+        /// <summary>
+        /// Leads to Thread.GetNamedDataSlot(...).
+        /// </summary>
         public static LocalDataStoreSlot GetNamedDataSlot(string name) => Thread.GetNamedDataSlot(name);
+
+        /// <summary>
+        /// Leads to Thread.FreeNamedDataSlot(...).
+        /// </summary>
         public static void FreeNamedDataSlot(string name) => Thread.FreeNamedDataSlot(name);
+
+        /// <summary>
+        /// Leads to Thread.GetNamedDataSlot(...).
+        /// </summary>
         public static object? GetData(LocalDataStoreSlot slot) => Thread.GetData(slot);
+
+        /// <summary>
+        /// Leads to Thread.SetData(...).
+        /// </summary>
         public static void SetData(LocalDataStoreSlot slot, object? data) => Thread.SetData(slot, data);
 
+        /// <summary>
+        /// Is no longer supported.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete("The ApartmentState property has been deprecated. Use GetApartmentState, SetApartmentState or TrySetApartmentState instead.")]
         public ApartmentState ApartmentState => _thread.ApartmentState;
 
+        /// <summary>
+        /// Leads to Thread.SetApartmentState(...).
+        /// </summary>
         [SupportedOSPlatform("windows")]
         public void SetApartmentState(ApartmentState state) => _thread.SetApartmentState(state);
 
+        /// <summary>
+        /// Leads to Thread.TrySetApartmentState(...).
+        /// </summary>
         public bool TrySetApartmentState(ApartmentState state) => _thread.TrySetApartmentState(state);
 
+        /// <summary>
+        /// Is no longer supported.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete()]
         public CompressedStack GetCompressedStack()
         {
             throw new InvalidOperationException();
         }
 
+        /// <summary>
+        /// Is no longer supported.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete()]
         public void SetCompressedStack(CompressedStack stack)
         {
             throw new InvalidOperationException();
         }
 
+        /// <summary>
+        /// Leads to Thread.GetDomain().
+        /// </summary>
         public static AppDomain GetDomain() => Thread.GetDomain();
+
+        /// <summary>
+        /// Leads to Thread.GetDomainID().
+        /// </summary>
         public static int GetDomainID() => Thread.GetDomainID();
+
+        /// <summary>
+        /// Leads to Thread.GetHashCode().
+        /// </summary>
         public override int GetHashCode() => _thread.GetHashCode();
+
+        /// <summary>
+        /// Leads to Thread.Join().
+        /// </summary>
         public void Join() => _thread.Join();
+
+        /// <summary>
+        /// Leads to Thread.Join(...).
+        /// </summary>
         public bool Join(TimeSpan timeout) => _thread.Join(timeout);
+
+        /// <summary>
+        /// Leads to Thread.MemoryBarrier.
+        /// </summary>
         public static void MemoryBarrier() => Thread.MemoryBarrier();
+
+        /// <summary>
+        /// Leads to Thread.Sleep(...).
+        /// </summary>
         public static void Sleep(TimeSpan timeout) => Thread.Sleep(timeout);
 
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static byte VolatileRead(ref byte address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static double VolatileRead(ref double address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static short VolatileRead(ref short address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static int VolatileRead(ref int address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static long VolatileRead(ref long address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static IntPtr VolatileRead(ref IntPtr address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static object? VolatileRead([NotNullIfNotNull(nameof(address))] ref object? address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static sbyte VolatileRead(ref sbyte address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static float VolatileRead(ref float address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static ushort VolatileRead(ref ushort address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static uint VolatileRead(ref uint address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static ulong VolatileRead(ref ulong address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileRead(...).
+        /// </summary>
         public static UIntPtr VolatileRead(ref UIntPtr address) => Thread.VolatileRead(ref address);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref byte address, byte value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref double address, double value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref short address, short value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref int address, int value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref long address, long value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref IntPtr address, IntPtr value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite([NotNullIfNotNull(nameof(value))] ref object? address, object? value)
                                      => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref sbyte address, sbyte value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref float address, float value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref ushort address, ushort value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref uint address, uint value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref ulong address, ulong value) => Thread.VolatileWrite(ref address, value);
+
+        /// <summary>
+        /// Leads to Thread.VolatileWrite(...).
+        /// </summary>
         public static void VolatileWrite(ref UIntPtr address, UIntPtr value) => Thread.VolatileWrite(ref address, value);
 
-#pragma warning restore CS1591
+        // #pragma warning restore CS1591
 
         #endregion unmodified routed to Thread
 
