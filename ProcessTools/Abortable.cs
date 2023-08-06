@@ -216,6 +216,7 @@ namespace NetEti.ApplicationControl
         /// only take a few machine instructions.  Calling this API is preferable to coding
         /// a explicit busy loop because the hardware can be informed that it is busy waiting.
         /// </summary>
+        /// <param name="iterations">Iteration - only takes a few machine instructions.</param>
         public static void SpinWait(int iterations) => Thread.SpinWait(iterations);
 
         /// <summary>
@@ -274,6 +275,7 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Waits for the thread to die or for timeout milliseconds to elapse.
         /// </summary>
+        /// <param name="millisecondsTimeout">Timeout in milliseconds</param>
         /// <returns>
         /// Returns true if the thread died, or false if the wait timed out. If
         /// -1 is given as the parameter, no timeout will occur.
@@ -381,6 +383,7 @@ namespace NetEti.ApplicationControl
         /// The thread that was killed is currently suspended.
         /// 
         /// </summary>
+        /// <param name="stateInfo">StateInfo or null.</param>
         /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete()]
         public void Abort(object? stateInfo)
@@ -444,31 +447,41 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Leads to Thread.AllocateDataSlot().
         /// </summary>
+        /// <returns>LocalDataStoreSlot</returns>
         public static LocalDataStoreSlot AllocateDataSlot() => Thread.AllocateDataSlot();
 
         /// <summary>
         /// Leads to Thread.AllocateNamedDataSlot(...).
         /// </summary>
+        /// <param name="name">Name of the DataSlot.</param>
+        /// <returns>LocalDataStoreSlot</returns>
         public static LocalDataStoreSlot AllocateNamedDataSlot(string name) => Thread.AllocateNamedDataSlot(name);
 
         /// <summary>
         /// Leads to Thread.GetNamedDataSlot(...).
         /// </summary>
+        /// <param name="name">The name of the DataSlot.</param>
+        /// <returns>LocalDataStoreSlot</returns>
         public static LocalDataStoreSlot GetNamedDataSlot(string name) => Thread.GetNamedDataSlot(name);
 
         /// <summary>
         /// Leads to Thread.FreeNamedDataSlot(...).
         /// </summary>
+        /// <param name="name">The name of the DataSlot.</param>
         public static void FreeNamedDataSlot(string name) => Thread.FreeNamedDataSlot(name);
 
         /// <summary>
         /// Leads to Thread.GetNamedDataSlot(...).
         /// </summary>
+        /// <param name="slot">The LocalDataStoreSlot.</param>
+        /// <returns>object?</returns>
         public static object? GetData(LocalDataStoreSlot slot) => Thread.GetData(slot);
 
         /// <summary>
         /// Leads to Thread.SetData(...).
         /// </summary>
+        /// <param name="slot">The LocalDataStoreSlot.</param>
+        /// <param name="data">The data to store.</param>
         public static void SetData(LocalDataStoreSlot slot, object? data) => Thread.SetData(slot, data);
 
         /// <summary>
@@ -481,17 +494,21 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Leads to Thread.SetApartmentState(...).
         /// </summary>
+        /// <param name="state">ApartmentState</param>
         [SupportedOSPlatform("windows")]
         public void SetApartmentState(ApartmentState state) => _thread.SetApartmentState(state);
 
         /// <summary>
         /// Leads to Thread.TrySetApartmentState(...).
         /// </summary>
+        /// <param name="state">ApartmentState</param>
+        /// <returns>Boolean indicating success.</returns>
         public bool TrySetApartmentState(ApartmentState state) => _thread.TrySetApartmentState(state);
 
         /// <summary>
         /// Is no longer supported.
         /// </summary>
+        /// <returns>CompressedStack.</returns>
         /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete()]
         public CompressedStack GetCompressedStack()
@@ -502,6 +519,7 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Is no longer supported.
         /// </summary>
+        /// <param name="stack">CompressedStack</param>
         /// <exception cref="PlatformNotSupportedException"></exception>
         [Obsolete()]
         public void SetCompressedStack(CompressedStack stack)
@@ -512,16 +530,19 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Leads to Thread.GetDomain().
         /// </summary>
+        /// <returns>AppDomain</returns>
         public static AppDomain GetDomain() => Thread.GetDomain();
 
         /// <summary>
         /// Leads to Thread.GetDomainID().
         /// </summary>
+        /// <returns>DomainID</returns>
         public static int GetDomainID() => Thread.GetDomainID();
 
         /// <summary>
         /// Leads to Thread.GetHashCode().
         /// </summary>
+        /// <returns>HashCode</returns>
         public override int GetHashCode() => _thread.GetHashCode();
 
         /// <summary>
@@ -532,6 +553,8 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Leads to Thread.Join(...).
         /// </summary>
+        /// <param name="timeout">TimeSpan timeout.</param>
+        /// <returns>bool</returns>
         public bool Join(TimeSpan timeout) => _thread.Join(timeout);
 
         /// <summary>
@@ -542,137 +565,190 @@ namespace NetEti.ApplicationControl
         /// <summary>
         /// Leads to Thread.Sleep(...).
         /// </summary>
+        /// <param name="timeout">Timeout as TimeSpan.</param>
         public static void Sleep(TimeSpan timeout) => Thread.Sleep(timeout);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>byte</returns>
         public static byte VolatileRead(ref byte address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>double</returns>
         public static double VolatileRead(ref double address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>short</returns>
         public static short VolatileRead(ref short address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>int</returns>
         public static int VolatileRead(ref int address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>long</returns>
         public static long VolatileRead(ref long address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>IntPtr</returns>
         public static IntPtr VolatileRead(ref IntPtr address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>object?</returns>
         public static object? VolatileRead([NotNullIfNotNull(nameof(address))] ref object? address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>sbyte</returns>
         public static sbyte VolatileRead(ref sbyte address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>float</returns>
         public static float VolatileRead(ref float address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>ushort</returns>
         public static ushort VolatileRead(ref ushort address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>uint</returns>
         public static uint VolatileRead(ref uint address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>ulong</returns>
         public static ulong VolatileRead(ref ulong address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileRead(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <returns>UIntPtr</returns>
         public static UIntPtr VolatileRead(ref UIntPtr address) => Thread.VolatileRead(ref address);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref byte address, byte value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref double address, double value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref short address, short value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref int address, int value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref long address, long value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref IntPtr address, IntPtr value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite([NotNullIfNotNull(nameof(value))] ref object? address, object? value)
                                      => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref sbyte address, sbyte value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref float address, float value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref ushort address, ushort value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref uint address, uint value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref ulong address, ulong value) => Thread.VolatileWrite(ref address, value);
 
         /// <summary>
         /// Leads to Thread.VolatileWrite(...).
         /// </summary>
+        /// <param name="address">address</param>
+        /// <param name="value">value</param>
         public static void VolatileWrite(ref UIntPtr address, UIntPtr value) => Thread.VolatileWrite(ref address, value);
 
         // #pragma warning restore CS1591
