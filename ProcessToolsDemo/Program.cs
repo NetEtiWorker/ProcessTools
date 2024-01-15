@@ -6,7 +6,7 @@ namespace ProcessToolsDemo
     internal class ThreadParameter
     {
         /// <summary>
-        /// Externally generated CanellationToken for a
+        /// Externally generated CancellationToken for a
         /// controlled termination of a thread.
         /// </summary>
         public CancellationToken Token { get; set; }
@@ -23,7 +23,7 @@ namespace ProcessToolsDemo
         public object? UserObject { get; set; }
 
         /// <summary>
-        /// Default construktor.
+        /// Default constructor.
         /// </summary>
         public ThreadParameter()
         {
@@ -47,7 +47,7 @@ namespace ProcessToolsDemo
         // Go to "Prog2"!
 
         // Prog3 is only for Testing the parameterless threading pattern.
-        // Prog1 ist the first attempt to check out the functinality of System.Runtime.ControlledExecution,
+        // Prog1 ist the first attempt to check out the functionality of System.Runtime.ControlledExecution,
         //       which has been issued with .net 7.0.
         // Prog1 is abandoned, the actual full demo is "Prog2".
 
@@ -149,7 +149,7 @@ namespace ProcessToolsDemo
         // Stay here!
 
         // Prog2 the actual full demo for "Abortable".
-        // Prog1 ist the first attempt to check out the functinality of System.Runtime.ControlledExecution,
+        // Prog1 ist the first attempt to check out the functionality of System.Runtime.ControlledExecution,
         //       which has been issued with .net 7.0.
         // Prog3 is only for testing the parameterless threading pattern.
 
@@ -270,7 +270,7 @@ namespace ProcessToolsDemo
         #region Prog1
         // Go to "Prog2"!
 
-        // Prog1 ist the first attempt to check out the functinality of System.Runtime.ControlledExecution,
+        // Prog1 ist the first attempt to check out the functionality of System.Runtime.ControlledExecution,
         // which has been issued with .net 7.0.
         // Prog1 is abandoned, the actual full demo is "Prog2".
         // Prog3 is only for testing the parameterless threading pattern.
