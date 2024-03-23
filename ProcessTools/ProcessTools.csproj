@@ -21,6 +21,10 @@
     <Compile Remove="ThreadParameter.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
   <PropertyGroup>
     <AssemblyRoot>$(ProjectDir)../../../ReadyBin/Assemblies</AssemblyRoot>
   </PropertyGroup>
