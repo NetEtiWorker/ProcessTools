@@ -1,13 +1,14 @@
-# PropertyAccess
-Bietet Ersatz für die mit .Net 7.0 weggefallene Funktion von "Tread.Abort".
+# ProcessTools
+Bietet Ersatz fÃ¼r die mit .Net 7.0 weggefallene Funktion von "Tread.Abort".
 Die neue Klasse "Abortable" kann anstelle von "Thread" genutzt werden.
 Siehe enthaltenes Projekt ProcessToolsDemo.
+EnthÃ¤lt auÃŸerdem Routinen zum Handling von Child-Prozessen.
 
 ## Einsatzbereich
 
-  - Dieses Repository gehört, wie auch alle anderen unter **WorkFrame** liegenden Projekte, ursprünglich zum
-   Repository **Vishnu** (https://github.com/VishnuHome/Vishnu), kann aber auch eigenständig für andere Apps verwendet werden.
+  - Dieses Repository gehÃ¶rt, wie auch alle anderen unter **WorkFrame** liegenden Projekte, ursprÃ¼nglich zum
+   Repository **Vishnu** (https://github.com/VishnuHome/Vishnu), kann aber auch eigenstÃ¤ndig fÃ¼r andere Apps verwendet werden.
 
 ## Voraussetzungen, Schnellstart, Quellcode und Entwicklung
 
-  - Weitere Ausführungen findest du im Repository [BasicAppSettings](https://github.com/WorkFrame/BasicAppSettings).
+  - Weitere AusfÃ¼hrungen findest du im Repository [BasicAppSettings](https://github.com/WorkFrame/BasicAppSettings).
